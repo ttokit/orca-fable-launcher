@@ -1,0 +1,34 @@
+{
+  "manifestVersion": 2,
+  "id": "fable-launcher",
+  "name": "Fable Launcher",
+  "version": "0.1.0",
+  "description": "Opens a terminal running Claude Code on Fable in auto permission mode.",
+  "engines": {
+    "orca": ">=1.4.248"
+  },
+  "execution": "trusted-worker",
+  "pluginApi": 1,
+  "main": "src/worker.ts",
+  "capabilities": [
+    {
+      "kind": "workspace:read"
+    }
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "id": "fable.launch",
+        "title": "Launch Claude (Fable, auto mode)",
+        "when": "workspace"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "fable.launch",
+        "key": "Mod+Alt+Shift+T",
+        "when": "workspace"
+      }
+    ]
+  }
+}
