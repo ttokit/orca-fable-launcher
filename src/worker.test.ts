@@ -18,3 +18,10 @@ test('does not guess when the focused workspace is ambiguous', async () => {
   assert.equal(await worker.command('fable.launch'), 'Could not identify the focused workspace (2 matches).')
   await worker.deactivate()
 })
+
+test('breaks a name/branch tie with the focused workspace terminals', () => {
+  const ws = (id: string) => ({ id, kind: 'worktree' as const, name: 'main', path: `/w/${id}`, branch: 'main', hostId: null })
+  const context = { branch: 'main', displayName: 'main', terminals: [{ id: 'term_b' }] }
+  const terminals = [{ handle: 'term_a', worktreePath: '/w/a' }, { handle: 'term_b', worktreePath: '/w/b' }]
+  assert.deepEqual(main.pickWorkspaces(context, [ws('a'), ws('b')], terminals).map((w) => w.id), ['b'])
+})
